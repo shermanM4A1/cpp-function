@@ -27,6 +27,13 @@
 
 C / C++ / Java / Python / Go / JavaScript / TypeScript / Rust / C# / Ruby / PHP
 
+## 编译（npm）
+### 1. 生成 node_modules
+npm install
+
+### 2. 打包
+node node_modules/@vscode/vsce/vsce package
+
 ## 安装（vsix）
 
 ```bash
