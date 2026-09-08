@@ -1,0 +1,125 @@
+{
+  "name": "func-star",
+  "displayName": "FuncStar - 函数星标导航",
+  "description": "扫描文件/文件夹生成函数实现列表，星标常用函数并快速跳转到定义行",
+  "version": "0.0.1",
+  "publisher": "test",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "function",
+    "navigate",
+    "star",
+    "outline",
+    "tree"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:funcstar.functions",
+    "onView:funcstar.starred"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "funcstar",
+          "title": "FuncStar",
+          "icon": "media/star.svg"
+        }
+      ]
+    },
+    "views": {
+      "funcstar": [
+        {
+          "id": "funcstar.functions",
+          "name": "函数列表（仅实现）"
+        },
+        {
+          "id": "funcstar.starred",
+          "name": "星标函数"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "funcstar.scan",
+        "title": "FuncStar: 选择文件/文件夹扫描函数"
+      },
+      {
+        "command": "funcstar.scanCurrent",
+        "title": "FuncStar: 扫描当前文件"
+      },
+      {
+        "command": "funcstar.scanSelection",
+        "title": "FuncStar: 扫描函数列表"
+      },
+      {
+        "command": "funcstar.star",
+        "title": "FuncStar: 星标函数",
+        "icon": "$(star)"
+      },
+      {
+        "command": "funcstar.unstar",
+        "title": "FuncStar: 取消星标",
+        "icon": "$(star-empty)"
+      },
+      {
+        "command": "funcstar.jump",
+        "title": "FuncStar: 跳转到函数"
+      },
+      {
+        "command": "funcstar.clearStars",
+        "title": "FuncStar: 清空全部星标"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "funcstar.scan",
+          "when": "view == funcstar.functions",
+          "group": "navigation@1"
+        },
+        {
+          "command": "funcstar.scanCurrent",
+          "when": "view == funcstar.functions",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "funcstar.star",
+          "when": "view == funcstar.functions && viewItem == funcItem",
+          "group": "inline@1"
+        },
+        {
+          "command": "funcstar.unstar",
+          "when": "view == funcstar.starred && viewItem == starredItem",
+          "group": "inline@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "funcstar.scanSelection",
+          "when": "explorerResourceIsFolder || explorerResourceIsFile",
+          "group": "funcstar@1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "tree-sitter-wasms": "^0.1.13",
+    "web-tree-sitter": "^0.22.4"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.2"
+  }
+}
